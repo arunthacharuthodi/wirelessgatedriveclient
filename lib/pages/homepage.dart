@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:wgdclient/repository/duty.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({super.key});
@@ -19,58 +22,63 @@ class _HomepageState extends State<Homepage> {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        child: Column(children: [
-                          Text("voltage"),
-                          Text("19V", style: TextStyle(fontSize: 28),),
-
-                        ]),
-                        
+              child: Column(
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    child: Column(children: [
+                      Text("voltage"),
+                      Text(
+                        "19V",
+                        style: TextStyle(fontSize: 28),
                       ),
-                      Container(
-                        child: Column(children: [
-                          Text("current"),
-                          Text("1A", style: TextStyle(fontSize: 28),),
-
-                        ]),
-                        
-                      )
-                    ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top:30),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom:8.0),
-                        child: TextFormField(
-                          controller: dutycyclecontroller,
-                          decoration: InputDecoration(
+                    ]),
+                  ),
+                  Container(
+                    child: Column(children: [
+                      Text("current"),
+                      Text(
+                        "1A",
+                        style: TextStyle(fontSize: 28),
+                      ),
+                    ]),
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 30),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: TextFormField(
+                        controller: dutycyclecontroller,
+                        decoration: InputDecoration(
                             border: new OutlineInputBorder(
                               borderRadius: new BorderRadius.circular(8.0),
                               borderSide: new BorderSide(),
                             ),
-                            hintText: "Enter your duty cycle"
-                          ),
-                        ),
+                            hintText: "Enter your duty cycle"),
                       ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton( onPressed: () {  },
-                        child: Text("upload"),),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          DutyRepo()
+                              .updateDuty(int.parse(dutycyclecontroller.text));
+                        },
+                        child: Text("upload"),
                       ),
-                    ],
-                  ),
-                )
-              ],
-            )
-          ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          )),
         ),
       ),
     );
